@@ -1,4 +1,4 @@
-.product__item{
+.product__item {
   cursor: pointer;
 }
 
@@ -9,7 +9,7 @@
   margin-top: 15px;
 }
 
-.product__info a:hover{
+.product__info a:hover {
   color: inherit;
 }
 
@@ -17,7 +17,7 @@
   font-size: 0.9rem;
 }
 
-.product__card-bottom .price{
+.product__card-bottom .price {
   font-size: 1.3rem;
   font-weight: 500;
   color: var(--primary-color);
@@ -30,4 +30,15 @@
   border-radius: 50px;
   font-weight: 500;
   padding: 5px;
+}
+
+.product__info {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  flex: auto;
+}
+.product__name {
+  height: 80px;
 }

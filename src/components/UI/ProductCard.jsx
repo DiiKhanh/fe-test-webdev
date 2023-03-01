@@ -27,7 +27,7 @@ const ProductCard = ({ item }) => {
           <motion.img
             whileHover={{ scale: 0.9 }}
             src={item.grid_picture_url}
-            alt=""
+            alt="item"
           />
         </div>
         <div className="p-2 product__info">
