@@ -14,25 +14,22 @@ import Clock from "../components/UI/Clock";
 const Home = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
-
   const [popularProducts, setPopularProducts] = useState([]);
 
   useEffect(() => {
     const filteredTrendingProducts = products.filter(
-      (item) => item.category === "chair"
+      (item) => item.category === "basketball"
     );
 
     const filteredBestSalesProducts = products.filter(
-      (item) => item.category === "sofa"
+      (item) => item.category === "lifestyle"
     );
 
     const filteredPopularProducts = products.filter(
-      (item) => item.category === "watch"
+      (item) => item.category === "other"
     );
-
     setTrendingProducts(filteredTrendingProducts);
     setBestSalesProducts(filteredBestSalesProducts);
-
     setPopularProducts(filteredPopularProducts);
   }, []);
 
