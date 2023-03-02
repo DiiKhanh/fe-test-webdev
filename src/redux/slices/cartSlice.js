@@ -46,6 +46,32 @@ const cartSlice = createSlice({
         (total, item) => total + Number(item.price) * Number(item.quantity),0
       );
     },
+    increase: (state, action) => {
+      const id = action.payload;
+      state.totalQuantity += 1;
+      const selectedItem = state.cartItems.find(item => item.id === id);
+      // If needed, add condition: quantity lower than stock remain
+      selectedItem.quantity += 1;
+    },
+    decrease: (state, action) => {
+      const id = action.payload;
+      state.totalQuantity -= 1;
+      const selectedItem = state.cartItems.find(item => item.id === id);
+      // If needed, add condition: quantity lower than stock remain
+      if (selectedItem.quantity > 1) {
+        selectedItem.quantity -= 1;
+      }
+    },
+    calculateTotal: (state) => {
+      let totalQuantity = 0;
+      let totalAmount = 0;
+      state.cartItems.forEach(item => {
+        totalQuantity += item.quantity;
+        totalAmount += item.quantity * item.price;
+      })
+      state.totalAmount = totalAmount;
+      state.totalQuantity = totalQuantity;
+    }
   },
 });
 
