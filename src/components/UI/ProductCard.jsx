@@ -13,9 +13,9 @@ const ProductCard = ({ item }) => {
     dispatch(
       cartActions.addItem({
         id: item.id,
-        productName: item.productName,
-        price: item.price,
-        imgUrl: item.imgUrl,
+        productName: item.name,
+        price: item.retail_price_cents,
+        imgUrl: item.grid_picture_url,
       })
     );
     toast.success("Product added successfully");

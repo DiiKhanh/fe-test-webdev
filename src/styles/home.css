@@ -47,7 +47,7 @@
   background: var(--primary-color);
 }
 
-.timer__count img{
+.timer__count img {
   height: 70% !important;
   width: 70% !important;
   object-fit: contain;
@@ -59,18 +59,34 @@
   color: var(--primary-color);
 }
 
-.store__btn a:hover{
+.store__btn a:hover {
   color: var(--primary-color);
 }
 
-@media only screen and (max-width:992px){
-  .counter__img img{
+@media only screen and (max-width: 992px) {
+  .counter__img img {
     display: none;
   }
-  .clock__top-content{
+  .clock__top-content {
     text-align: center;
   }
-  .count__down-col{
+  .count__down-col {
     text-align: center;
   }
+}
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.slide-text {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.counter-img {
+  width: 400px;
+  height: 400px;
 }
