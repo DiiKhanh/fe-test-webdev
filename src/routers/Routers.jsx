@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
+import Purchased from "../pages/Purchased";
 import Signup from "../pages/Signup";
 import Login from "../pages/Login";
 import ProductDetails from "../pages/ProductDetails";
@@ -25,6 +26,7 @@ const Routers = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="purchased" element={<Purchased />}/>
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       <Route path="*" element={<NotFound />} />
