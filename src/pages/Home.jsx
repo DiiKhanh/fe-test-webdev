@@ -84,6 +84,7 @@ const Home = () => {
             <Col lg="12" className="text-center">
               <h2 className="section__title">Best Sales</h2>
             </Col>
+            <h1></h1>
             <ProductsList data={bestSalesProducts} />
           </Row>
         </Container>
