@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import "../styles/home.css";
 import { Container, Col, Row } from "reactstrap";
-
 import Services from "../services/Services";
 import ProductsList from "../components/UI/ProductsList";
 import products from "../assets/data/products";
-
 import Clock from "../components/UI/Clock";
+import Slideshow from "../components/UI/Slideshow";
+import Brand from "../components/UI/Brand";
 
 const Home = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
@@ -18,19 +18,19 @@ const Home = () => {
 
   useEffect(() => {
     const filteredTrendingProducts = products.filter(
-      (item) => item.category === "basketball"
+      (item) => item.category[0] === "basketball"
     );
 
     const filteredBestSalesProducts = products.filter(
-      (item) => item.category === "lifestyle"
+      (item) => item.category[0] === "running"
     );
 
     const filteredPopularProducts = products.filter(
-      (item) => item.category === "other"
+      (item) => item.category[0] === "lifestyle"
     );
     setTrendingProducts(filteredTrendingProducts);
     setBestSalesProducts(filteredBestSalesProducts);
-    setPopularProducts(filteredPopularProducts);
+    setPopularProducts(filteredPopularProducts.slice(0, 10));
   }, []);
 
   const year = new Date().getFullYear();
@@ -54,19 +54,18 @@ const Home = () => {
                 </motion.button>
               </div>
             </Col>
-
             <Col lg="6" md="6">
               <div className="hero__img">
-                <img
-                  src="https://image.goat.com/750/attachments/product_template_pictures/images/011/119/994/original/218099_00.png.png"
-                  alt="heroimg"
-                />
+                <Slideshow width={65} />
               </div>
             </Col>
           </Row>
         </Container>
       </section>
+      {/* service */}
       <Services />
+      {/* brand */}
+      <Brand />
       <section className="trending__products">
         <Container>
           <Row>
@@ -98,7 +97,6 @@ const Home = () => {
                 <h3 className="text-white fs-5 mb-2">Quality Sneaker</h3>
               </div>
               <Clock />
-
               <motion.button
                 whileTap={{ scale: 1.2 }}
                 className="buy__btn store__btn"
@@ -107,10 +105,9 @@ const Home = () => {
               </motion.button>
             </Col>
             <Col lg="6" md="12" className="text-end counter__img">
-              <img
-                src="https://image.goat.com/750/attachments/product_template_pictures/images/011/119/994/original/218099_00.png.png"
-                alt="img-counter"
-              />
+              <div className="counter-img">
+                <Slideshow width={25} />
+              </div>
             </Col>
           </Row>
         </Container>

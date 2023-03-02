@@ -12,7 +12,7 @@ const Shop = () => {
   const handleSearch = (e) => {
     const searchText = e.target.value;
     const searchedValue = products.filter((item) =>
-      item.productName.toLowerCase().includes(searchText.toLowerCase())
+      item.name.toLowerCase().includes(searchText.toLowerCase())
     );
     setProductsData(searchedValue);
   };
