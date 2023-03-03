@@ -1,37 +1,56 @@
 .product__details {
+  
   margin-top: 50px;
 }
-
+.product__size {
+  margin-top: 5px;
+}
+.product__Category {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.product__Rdetails
+{
+  color: #3ecd21;
+  font-size: 4rem;
+}
 .product__details h2 {
+  color: #0ea218;
   margin-bottom: 10px;
   font-size: 1.8rem;
 }
 
 .product__rating span i {
-  color: coral;
+  color: rgb(38, 179, 10);
 }
 
 .product__rating p span {
-  color: coral;
+  color: rgb(103, 229, 57);
   font-weight: 500;
 }
 .product__price {
+  color: rgb(229, 57, 57);
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 800;
 }
 
-.tab__wrapper h6 {
+.tab__wrapper  {
   font-size: 1rem;
-  font-weight: 500;
-  color: var(--primary-color);
+  font-weight: 600;
+  margin-top: 50px;
+  color: rgb(153, 222, 135);
   cursor: pointer;
+}
+.size {
+  margin-left: 10px;
+  width: 35px;
 }
 .active__tab {
   font-weight: 600 !important;
 }
 
 .review__wrapper ul li span {
-  color: coral;
+  color: rgb(51, 199, 105);
   font-weight: 600;
 }
 
@@ -40,7 +59,7 @@
 }
 
 .review__form {
-  width: 70%;
+  width: 50%;
   margin: auto;
   margin-top: 50px;
 }

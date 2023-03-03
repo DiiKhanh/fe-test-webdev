@@ -1,8 +1,8 @@
 .common__section {
-  background: linear-gradient(rgba(0, 0, 0, 0.521), rgba(0, 0, 0, 0.521)),
+  background: linear-gradient(rgba(255, 255, 255, 0.521), rgba(6, 139, 10, 0.521)),
     url(../assets/images/hero-img.png) no-repeat center center;
   background-size: cover;
-  height: 300px;
+  height: 250px;
   padding: 100px 0;
   display: flex;
   align-items: center;
@@ -10,7 +10,8 @@
 }
 
 .common__section h1 {
-  color: #fff;
+  color: #0ea218;
+  font-size: 4rem;
   font-weight: 600;
 }
 

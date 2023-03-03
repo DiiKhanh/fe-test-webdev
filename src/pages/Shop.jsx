@@ -27,11 +27,9 @@ const Shop = () => {
               <div className="filter__widget">
                 <select>
                   <option value="none">Filter By Category</option>
-                  <option value="sofa"></option>
-                  <option value="mobile"></option>
-                  <option value="chair"></option>
-                  <option value="watch"></option>
-                  <option value="wireless"></option>
+                  <option value="Nike">Nike</option>
+                  <option value="Adidas">Adidas</option>
+                  <option value="Puma">Puma</option>
                 </select>
               </div>
             </Col>
