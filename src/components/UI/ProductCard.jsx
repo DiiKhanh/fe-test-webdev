@@ -34,7 +34,7 @@ const ProductCard = ({ item }) => {
           <h3 className="product__name">
             <Link to={`/shop/${item.id}`}>{item.name}</Link>
           </h3>
-          <span>{item.category}</span>
+          <span className="product__cate">{item.category}</span>
         </div>
         <div className="product__card-bottom d-flex align-items-center justify-content-between p-2">
           <span className="price">${item.retail_price_cents}</span>

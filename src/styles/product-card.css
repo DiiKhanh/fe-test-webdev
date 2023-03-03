@@ -20,12 +20,12 @@
 .product__card-bottom .price {
   font-size: 1.3rem;
   font-weight: 500;
-  color: var(--primary-color);
+  color:#ea1414;
 }
 
 .product__card-bottom span i {
   font-size: 1.2rem;
-  background: var(--primary-color);
+  background:  #b230ef;
   color: #fff;
   border-radius: 50px;
   font-weight: 500;
@@ -41,4 +41,9 @@
 }
 .product__name {
   height: 100px;
+}
+.product__cate{
+  font-size: 0.3rem;
+  font-weight: 500;
+  color: #14e18c;
 }
