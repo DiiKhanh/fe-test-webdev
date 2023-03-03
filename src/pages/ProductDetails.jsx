@@ -108,7 +108,7 @@ const ProductDetails = () => {
             {productsData.length === 0 ? (
               <h1 className="text-center fs-4">No Products are found!</h1>
             ) : (
-              <ProductsList data={productsData} />
+              <ProductsList data={productsData}/>
             )}
           </Row>
         </Container>
