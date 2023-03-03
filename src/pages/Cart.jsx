@@ -15,8 +15,6 @@ const Cart = () => {
     dispatch(cartActions.calculateTotal());
   }, [cartItems]);
 
-  console.log("cart re-rendered...");
-
   return (
     <Helmet title="Cart">
       <CommonSection title="Shopping Cart" />
@@ -49,7 +47,9 @@ const Cart = () => {
               <div>
                 <h6 className="d-flex align-items-center justify-content-between">
                   Subtotal
-                  <span className="fs-4 fw-bold">${totalAmount ? totalAmount : 0}</span>
+                  <span className="fs-4 fw-bold">
+                    ${totalAmount ? totalAmount : 0}
+                  </span>
                 </h6>
               </div>
               <p className="fs-6 mt-2">

@@ -9,7 +9,12 @@ const Brand = () => {
         <Row>
           <div className="brand">
             {brandData.map((item, idx) => (
-              <img src={item.url} alt="brand" className="brand-img" />
+              <img
+                src={item.url}
+                alt="brand"
+                className="brand-img"
+                key={item.url}
+              />
             ))}
           </div>
         </Row>
