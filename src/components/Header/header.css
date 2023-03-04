@@ -85,7 +85,7 @@
   position: relative;
   z-index: 9;
 }
- .profile__actions {
+.profile__actions {
   position: absolute;
   top: 98%;
   left: 0;
@@ -125,6 +125,13 @@
   left: 0;
   z-index: 999;
   background: #fff;
+}
+
+.login__success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 @media only screen and (max-width: 768px) {

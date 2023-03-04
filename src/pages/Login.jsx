@@ -3,9 +3,6 @@ import Helmet from "../components/Helmet/Helmet";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../firebase.config";
-// import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
