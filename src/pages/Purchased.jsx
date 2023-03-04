@@ -4,30 +4,33 @@ import { Container, Row } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 import PurchasedOrder from "../components/UI/PurchasedOrder";
-import { calculateTotalSpent } from "../redux/slices/purchasedSlice";
+import { calculateTotalSpent, getUserOrder } from "../redux/slices/purchasedSlice";
 import "../styles/purchased.css";
 
-// Invoice API json format visualized:
-// {
-//  [
-//   {
-//     orderItems: [...];   //item format is same as cart item
-//     totalAmount:
-//     totalQuantity:
-//   },
-//   ...more invoices
-//  ]
-// }
 
-// Calling order data from server (x)
 export default function Purchased() {
   const dispatch = useDispatch();
-  const { orderList, totalSpent } = useSelector((state) => state.purchased);
-
+  const { orderList, totalSpent, isLoading } = useSelector((state) => state.purchased);
+  
   // console.log(orderList);
   useEffect(() => {
     dispatch(calculateTotalSpent());
   }, [orderList]);
+  
+  // Calling order data from server (x)
+  // useEffect(() => {
+  //   dispatch(getUserOrder());
+  // }, []);
+
+  // if (isLoading) {
+  //   return (
+  //   <div class="text-center">
+  //     <div class="spinner-border" role="status">
+  //         <span class="sr-only">Loading...</span>
+  //     </div>
+  //   </div>
+  // )
+  // }
 
   return (
     <Helmet title="Purchased">
