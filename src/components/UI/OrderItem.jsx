@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function OrderItem({ item }) {
   return (
     <div className="order-item justify-content-between w-100 align-items-center">

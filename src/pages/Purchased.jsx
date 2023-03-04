@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 import PurchasedOrder from "../components/UI/PurchasedOrder";
-import { purchasedActions } from "../redux/slices/purchasedSlice";
+import { calculateTotalSpent } from "../redux/slices/purchasedSlice";
 import "../styles/purchased.css";
 
 // Invoice API json format visualized:
@@ -19,14 +19,15 @@ import "../styles/purchased.css";
 //  ]
 // }
 
+// Calling order data from server (x)
 export default function Purchased() {
   const dispatch = useDispatch();
   const { orderList, totalSpent } = useSelector((state) => state.purchased);
 
   // console.log(orderList);
   useEffect(() => {
-    dispatch(purchasedActions.calculateTotalSpent());
-  }, []);
+    dispatch(calculateTotalSpent());
+  }, [orderList]);
 
   return (
     <Helmet title="Purchased">
@@ -35,13 +36,15 @@ export default function Purchased() {
         <Container>
           <Row>
             <ul id="order-list">
-              {orderList.map((order) => (
-                <PurchasedOrder key={order.order_id} order={order} />
+              {orderList.map((order, index) => (
+                <PurchasedOrder key={index} order={order} />
               ))}
             </ul>
           </Row>
           <Row>
-            <h2 id="total-spent" className="text-center">Your total spent: $ {totalSpent}</h2>
+            <h3 id="total-spent" className="text-center">
+              Your total spent: $ {totalSpent}
+            </h3>
           </Row>
         </Container>
       </section>

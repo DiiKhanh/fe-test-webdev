@@ -18,7 +18,7 @@ const ProductCard = ({ item }) => {
         imgUrl: item.grid_picture_url,
       })
     );
-    toast.success("Product added successfully");
+    toast.success("Product added, visit cart to save");
   };
   return (
     <Col lg="3" md="4" className="mb-2">

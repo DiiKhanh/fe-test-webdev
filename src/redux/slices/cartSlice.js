@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cartItems: [],
-  totalAmount: 0,
-  totalQuantity: 0,
+  cartItems: localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [],
+  totalAmount: localStorage.getItem("totalAmount")
+    ? localStorage.getItem("totalAmount")
+    : 0,
+  totalQuantity: localStorage.getItem("totalQuantity")
+    ? localStorage.getItem("totalQuantity")
+    : 0,
 };
 
 const cartSlice = createSlice({
@@ -32,7 +38,8 @@ const cartSlice = createSlice({
       }
 
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.price) * Number(item.quantity),0
+        (total, item) => total + Number(item.price) * Number(item.quantity),
+        0
       );
     },
     deleteItem: (state, action) => {
@@ -43,20 +50,21 @@ const cartSlice = createSlice({
         state.totalQuantity = state.totalQuantity - existingItem.quantity;
       }
       state.totalAmount = state.cartItems.reduce(
-        (total, item) => total + Number(item.price) * Number(item.quantity),0
+        (total, item) => total + Number(item.price) * Number(item.quantity),
+        0
       );
     },
     increase: (state, action) => {
       const id = action.payload;
       state.totalQuantity += 1;
-      const selectedItem = state.cartItems.find(item => item.id === id);
+      const selectedItem = state.cartItems.find((item) => item.id === id);
       // If needed, add condition: quantity lower than stock remain
       selectedItem.quantity += 1;
     },
     decrease: (state, action) => {
       const id = action.payload;
       state.totalQuantity -= 1;
-      const selectedItem = state.cartItems.find(item => item.id === id);
+      const selectedItem = state.cartItems.find((item) => item.id === id);
       // If needed, add condition: quantity lower than stock remain
       if (selectedItem.quantity > 1) {
         selectedItem.quantity -= 1;
@@ -65,16 +73,23 @@ const cartSlice = createSlice({
     calculateTotal: (state) => {
       let totalQuantity = 0;
       let totalAmount = 0;
-      state.cartItems.forEach(item => {
+      state.cartItems.forEach((item) => {
         totalQuantity += item.quantity;
         totalAmount += item.quantity * item.price;
-      })
+      });
       state.totalAmount = totalAmount;
       state.totalQuantity = totalQuantity;
-    }
+    },
+    clearCart: (state) => {
+      state.cartItems = [];
+      state.totalAmount = 0;
+      state.totalQuantity = 0;
+    },
   },
 });
 
 export const cartActions = cartSlice.actions;
+export const { clearCart, calculateTotal, increase, decrease, deleteItem } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

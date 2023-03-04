@@ -28,7 +28,6 @@ const test_data = [
       },
     ],
     totalAmount: 420,
-    totalQuantity: 12,
   },
   {
     order_id: "3",
@@ -57,7 +56,6 @@ const test_data = [
       },
     ],
     totalAmount: 850,
-    totalQuantity: 12,
   },
   {
     order_id: "2",
@@ -86,12 +84,11 @@ const test_data = [
       },
     ],
     totalAmount: 120,
-    totalQuantity: 12,
   },
 ];
 
 const initialState = {
-  orderList: [...test_data],
+  orderList: [],
   totalSpent: 0,
 };
 
@@ -106,9 +103,12 @@ const purchasedSlice = createSlice({
       });
       state.totalSpent = amount;
     },
+    addOrder: (state, action) => {
+      state.orderList.push(action.payload);
+    },
   },
 });
 
-export const purchasedActions = purchasedSlice.actions;
+export const { calculateTotalSpent, addOrder } = purchasedSlice.actions;
 
 export default purchasedSlice.reducer;

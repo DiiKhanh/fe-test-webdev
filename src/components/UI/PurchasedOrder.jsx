@@ -1,11 +1,15 @@
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
 import OrderItem from "./OrderItem";
 
 export default function PurchasedOrder({ order }) {
   const seeMoreBtn = useRef(null);
   const itemsContainer = useRef(null);
+  const [choice, setChoice] = useState("more");
 
   const toggleSeeMore = () => {
+    if (choice === "more") {
+      setChoice("less");
+    } else setChoice("more");
     itemsContainer.current.classList.toggle("active");
   };
 
@@ -21,9 +25,17 @@ export default function PurchasedOrder({ order }) {
           <OrderItem key={index} item={item} />
         ))}
       </div>
-      <span className="see-more fs-5" ref={seeMoreBtn} onClick={toggleSeeMore}>
-        See more
-      </span>
+      {order.orderItems.length === 1 ? (
+        <span></span>
+      ) : (
+        <span
+          className="see-more fs-5"
+          ref={seeMoreBtn}
+          onClick={toggleSeeMore}
+        >
+          See {choice}
+        </span>
+      )}
       <hr></hr>
       <h5>Total: $ {order.totalAmount}</h5>
     </li>
