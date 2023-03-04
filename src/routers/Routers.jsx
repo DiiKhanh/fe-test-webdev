@@ -10,6 +10,8 @@ import Login from "../pages/Login";
 import ProductDetails from "../pages/ProductDetails";
 import NotFound from "../components/NotFound/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
+import AddProduct from "../pages/AddProduct";
+
 const Routers = () => {
   return (
     <Routes>
@@ -26,7 +28,15 @@ const Routers = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="purchased" element={<Purchased />}/>
+      <Route path="purchased" element={<Purchased />} />
+      <Route
+        path="add-product"
+        element={
+          <ProtectedRoute>
+            <AddProduct />
+          </ProtectedRoute>
+        }
+      />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       <Route path="*" element={<NotFound />} />

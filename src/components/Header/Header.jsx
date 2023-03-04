@@ -25,7 +25,7 @@ const nav__links = [
   {
     path: "purchased",
     display: "Purchased",
-  }
+  },
 ];
 
 const Header = () => {
@@ -33,7 +33,8 @@ const Header = () => {
   const menuRef = useRef(null);
   const profileRef = useRef(null);
   const navigate = useNavigate();
-  const currentUser = null;
+  // wait be return data user
+  const currentUser = 1;
 
   const { totalQuantity } = useSelector((state) => state.cart);
 
@@ -103,7 +104,7 @@ const Header = () => {
               <div className="profile">
                 <motion.img
                   whileTap={{ scale: 1.2 }}
-                  src={currentUser ? currentUser.photoURL : userIcon}
+                  src={currentUser ? userIcon : userIcon}
                   alt="avt-user"
                   onClick={toggleProfile}
                 />
@@ -113,7 +114,10 @@ const Header = () => {
                   onClick={toggleProfile}
                 >
                   {currentUser ? (
-                    <span onClick={logout}>Logout</span>
+                    <div className="login__success">
+                      <span>Logout</span>
+                      <Link to="/add-product">Add Product</Link>
+                    </div>
                   ) : (
                     <div className="d-flex align-items-center justify-content-between flex-column">
                       <Link to="/signup">Signup</Link>
