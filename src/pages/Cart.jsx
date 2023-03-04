@@ -1,21 +1,75 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../styles/cart.css";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 import { Container, Row, Col } from "reactstrap";
+import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import { cartActions } from "../redux/slices/cartSlice";
+import {
+  cartActions,
+  calculateTotal,
+  clearCart,
+  increase,
+  decrease,
+  deleteItem,
+} from "../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { addOrder } from "../redux/slices/purchasedSlice";
 
 const Cart = () => {
-  const { cartItems, totalAmount } = useSelector((state) => state.cart);
+  const { cartItems, totalAmount, totalQuantity } = useSelector((state) => state.cart);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [testID, setTestID] = useState(4);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const checkOutBtn = useRef(null);
+
   useEffect(() => {
-    dispatch(cartActions.calculateTotal());
+    cartItems.length === 0 ? setIsEmpty(true) : setIsEmpty(false);
+    dispatch(calculateTotal());
+
+    // Saving cart info onto local storage as user adds items
+    console.log(cartItems);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem('totalAmount', totalAmount);
+    localStorage.setItem('totalQuantity', totalQuantity);
+
   }, [cartItems]);
 
-  console.log("cart re-rendered...");
+  const randomId = () => {
+    return (
+      Date.now().toString(36) +
+      Math.floor(
+        Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)
+      ).toString(36)
+    );
+  };
+
+  const createOrder = (cartItems) => {
+    const total = cartItems.reduce(
+      (accumulateValue, item) => accumulateValue + item.price * item.quantity,
+      0
+    );
+    return {
+      order_id: randomId(),
+      orderItems: cartItems,
+      totalAmount: total,
+    };
+  };
+
+  const checkOut = () => {
+    // Send order data to server (x)
+    if (cartItems.length === 0) return;
+    else {
+      toast.success("Your order has been sent");
+      dispatch(clearCart());
+      dispatch(addOrder(createOrder(cartItems)));
+      setTestID(testID + 1);
+      // checkOutLink.current.click();
+      setTimeout(() => navigate("/"), 2000);
+    }
+  };
 
   return (
     <Helmet title="Cart">
@@ -49,7 +103,9 @@ const Cart = () => {
               <div>
                 <h6 className="d-flex align-items-center justify-content-between">
                   Subtotal
-                  <span className="fs-4 fw-bold">${totalAmount ? totalAmount : 0}</span>
+                  <span className="fs-4 fw-bold">
+                    ${totalAmount ? totalAmount : 0}
+                  </span>
                 </h6>
               </div>
               <p className="fs-6 mt-2">
@@ -59,8 +115,19 @@ const Cart = () => {
                 <button className="buy__btn w-100">
                   <Link to="/shop">Continue Shopping</Link>
                 </button>
-                <button className="buy__btn w-100 mt-3">
-                  <Link to="/checkout">Checkout</Link>
+                <button
+                  className={`buy__btn w-100 mt-3 ${isEmpty ? "disabled" : ""}`}
+                  onClick={(event) => {
+                    checkOut();
+                  }}
+                  ref={checkOutBtn}
+                >
+                  {/* Push order to purchased on click */}
+                  {isEmpty ? (
+                    <span>Checkout</span>
+                  ) : (
+                    <Link to="/home">Checkout</Link>
+                  )}
                 </button>
               </div>
             </Col>
@@ -74,13 +141,13 @@ const Cart = () => {
 const Tr = ({ item }) => {
   const dispatch = useDispatch();
   const deleteProduct = () => {
-    dispatch(cartActions.deleteItem(item.id));
+    dispatch(deleteItem(item.id));
   };
   const increaseAmount = () => {
-    dispatch(cartActions.increase(item.id));
+    dispatch(increase(item.id));
   };
   const decreaseAmount = () => {
-    dispatch(cartActions.decrease(item.id));
+    dispatch(decrease(item.id));
   };
   return (
     <tr>
