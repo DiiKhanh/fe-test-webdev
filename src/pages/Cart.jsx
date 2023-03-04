@@ -106,6 +106,9 @@ const Cart = () => {
                   <span className="fs-4 fw-bold">
                     ${totalAmount ? totalAmount : 0}
                   </span>
+                  <span className="fs-4 fw-bold">
+                    ${totalAmount ? totalAmount : 0}
+                  </span>
                 </h6>
               </div>
               <p className="fs-6 mt-2">

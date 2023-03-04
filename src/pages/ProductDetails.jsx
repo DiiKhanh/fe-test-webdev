@@ -19,7 +19,22 @@ const ProductDetails = () => {
     main_picture_url: imgUrl,
     retail_price_cents: price,
     category,
+    size_range,
+    color,
   } = product;
+
+  const dispatch = useDispatch();
+  const addToCart = () => {
+    dispatch(
+      cartActions.addItem({
+        id: product.id,
+        productName: product.name,
+        price: product.retail_price_cents,
+        imgUrl: product.grid_picture_url,
+      })
+    );
+    toast.success("Product added successfully");
+  };
   return (
     <Helmet title={productName}>
       <CommonSection title={productName} />
@@ -27,13 +42,15 @@ const ProductDetails = () => {
         <Container>
           <Row>
             <Col lg="6">
-              <img src={imgUrl} alt="" />
+              <img src={imgUrl} alt="img" />
             </Col>
             <Col lg="6">
               <div className="product__details">
                 <h2>{productName}</h2>
                 <div className="product__rating d-flex align-items-center gap-5 mb-3">
-                  <div>
+                  <div className="product__category">
+                    {" "}
+                    Rank:
                     <span>
                       <i className="ri-star-s-fill"></i>
                     </span>
@@ -51,12 +68,43 @@ const ProductDetails = () => {
                     </span>
                   </div>
                 </div>
-                <div className="d-flex align-items-center gap-5">
+                <h6>SKU: {id}</h6>
+                <div className="d-flex align-items-center gap-2">
+                  <span className="product__category">Price:</span>
                   <span className="product__price">${price}</span>
-                  <span>Category: {category}</span>
                 </div>
-                {/* <p className="mt-3">({shortDesc})</p> */}
-                <motion.button whileTap={{ scale: 1.2 }} className="buy__btn">
+                <div className="d-flex align-items-center gap-2">
+                  <span className="product__category">Category: </span>
+                  <span>{category} </span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <span className="product__category">Color: </span>
+                  <span>{color} </span>
+                </div>
+                <div className="product__size">
+                  <h5>Size: </h5>
+                </div>
+                <div className="product__size">
+                  {size_range.map((i) => (
+                    <button className="size" key={i}>
+                      {i}
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-5">
+                  <h6 className="tab__wrapper">
+                    FREE SHIPPING NATIONWIDE AND FREE SOCKS WHEN ORDERING ONLINE
+                  </h6>
+                </div>
+                <p className="mt-3">
+                  Description: Lorem ipsum dolor sit amet, consectetur
+                  adipisicing elit. Accusamus, facere, voluptatibus dolorem
+                </p>
+                <motion.button
+                  whileTap={{ scale: 1.2 }}
+                  className="buy__btn"
+                  onClick={addToCart}
+                >
                   Add To Cart
                 </motion.button>
               </div>

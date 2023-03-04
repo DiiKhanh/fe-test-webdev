@@ -7,6 +7,15 @@
   font-size: 1.8rem;
 }
 
+.product__category {
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  gap: 5px;
+}
+.product__size {
+  margin-top: 5px;
+}
 .product__rating span i {
   color: coral;
 }
@@ -30,7 +39,21 @@
   font-weight: 600 !important;
 }
 
-.review__wrapper ul li span {
+.size {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.521),
+      rgba(6, 139, 10, 0.521)
+    ),
+    url(../assets/images/common-section.png) no-repeat center center;
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 35px;
+  color: rgb(6, 22, 206);
+  font-weight: 600;
+  border: 2px solid rgb(12, 221, 148);
+}
+
+/* .review__wrapper ul li span {
   color: coral;
   font-weight: 600;
 }
@@ -79,7 +102,7 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 30px;
-}
+} */
 
 @media only screen and (max-width: 768px) {
   .product__details h2 {
