@@ -3,12 +3,32 @@ import Helmet from "../components/Helmet/Helmet";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import { useDispatch } from "react-redux";
+import { signIn } from "../redux/slices/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const hanleLogin = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      username,
+      password,
+    };
+    const res = await dispatch(signIn(data)).unwrap();
+    if (!res?.status) {
+      toast.success("Login success!");
+      navigate("/home");
+    } else {
+      toast.error("Login wrong!");
+    }
+  };
 
   return (
     <Helmet title="Login">
@@ -22,13 +42,13 @@ const Login = () => {
             ) : (
               <Col lg="6" className="m-auto text-center">
                 <h3 className="fw-bold fs-4 mb-4">Login</h3>
-                <Form className="auth__form">
+                <Form className="auth__form" onSubmit={hanleLogin}>
                   <FormGroup className="form__group">
                     <input
-                      type="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      type="text"
+                      placeholder="Enter your username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </FormGroup>
                   <FormGroup className="form__group">
