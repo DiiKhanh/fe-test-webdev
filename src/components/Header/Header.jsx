@@ -1,13 +1,14 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { logOut } from "../../redux/slices/authSlice";
 
 const nav__links = [
   {
@@ -33,11 +34,15 @@ const Header = () => {
   const menuRef = useRef(null);
   const profileRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+
+  // console.log(currentUser);
   // wait be return data user
-  const currentUser = {
-    id: 1,
-    roles: "user",
-  };
+  // const currentUser = {
+  //   id: 1,
+  //   roles: "user",
+  // };
 
   const { totalQuantity } = useSelector((state) => state.cart);
 
@@ -70,11 +75,16 @@ const Header = () => {
   };
 
   const handleVerify = () => {
-    if (currentUser?.roles === "admin") {
+    if (currentUser?.roles[0] === "role_admin") {
       navigate("/add-product");
     } else {
       toast.error("401_UNAUTHORIZED");
     }
+  };
+
+  const handleLogout = async () => {
+    await dispatch(logOut());
+    toast.success("Logout success!");
   };
 
   return (
@@ -126,7 +136,7 @@ const Header = () => {
                 >
                   {currentUser ? (
                     <div className="login__success">
-                      <span>Logout</span>
+                      <span onClick={handleLogout}>Logout</span>
                       <span to="/add-product" onClick={handleVerify}>
                         Add Product
                       </span>

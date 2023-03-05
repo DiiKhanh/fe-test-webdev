@@ -3,9 +3,10 @@ import Helmet from "../components/Helmet/Helmet";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import "../styles/login.css";
-
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { signUp } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -14,6 +15,23 @@ const Signup = () => {
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const hanleSignUp = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      username,
+      email,
+      password,
+    };
+    const res = await dispatch(signUp(data)).unwrap();
+    if (!res?.status) {
+      toast.success("Register success!");
+      navigate("/login");
+    } else {
+      toast.error("Something wrong!");
+    }
+  };
 
   return (
     <Helmet title="Signup">
@@ -27,7 +45,7 @@ const Signup = () => {
             ) : (
               <Col lg="6" className="m-auto text-center">
                 <h3 className="fw-bold fs-4 mb-4">Signup</h3>
-                <Form className="auth__form">
+                <Form className="auth__form" onSubmit={hanleSignUp}>
                   <FormGroup className="form__group">
                     <input
                       type="text"

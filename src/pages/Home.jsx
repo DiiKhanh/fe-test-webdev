@@ -6,32 +6,49 @@ import "../styles/home.css";
 import { Container, Col, Row } from "reactstrap";
 import Services from "../services/Services";
 import ProductsList from "../components/UI/ProductsList";
-import products from "../assets/data/products";
+// import products from "../assets/data/products";
 import Clock from "../components/UI/Clock";
 import Slideshow from "../components/UI/Slideshow";
 import Brand from "../components/UI/Brand";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllProduct } from "../redux/slices/ProductSlice";
+import { toast } from "react-toastify";
+import * as api from "../api";
 const Home = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSalesProducts, setBestSalesProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
+  const products = useSelector((state) => state.product?.products);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await dispatch(fetchAllProduct()).unwrap();
+      } catch (error) {
+        toast.error("something wrong");
+      }
+    };
+    fetch();
+  }, [dispatch]);
 
   useEffect(() => {
     const filteredTrendingProducts = products.filter(
-      (item) => item.category[0] === "basketball"
+      (item) => item.catagory[0] === "basketball"
     );
 
     const filteredBestSalesProducts = products.filter(
-      (item) => item.category[0] === "running"
+      (item) => item.catagory[0] === "running"
     );
 
     const filteredPopularProducts = products.filter(
-      (item) => item.category[0] === "lifestyle"
+      (item) => item.catagory[0] === "lifestyle"
     );
     setTrendingProducts(filteredTrendingProducts);
     setBestSalesProducts(filteredBestSalesProducts);
-    setPopularProducts(filteredPopularProducts.slice(0, 10));
-  }, []);
+    setPopularProducts(filteredPopularProducts);
+  }, [products]);
 
   const year = new Date().getFullYear();
 
