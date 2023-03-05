@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 import "../styles/shop.css";
-import products from "../assets/data/products";
+// import products from "../assets/data/products";
 import ProductsList from "../components/UI/ProductsList";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllProduct } from "../redux/slices/ProductSlice";
 const Shop = () => {
-  const [productsData, setProductsData] = useState(products);
+  const [productsData, setProductsData] = useState([]);
+  const products = useSelector((state) => state.product?.products);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await dispatch(fetchAllProduct()).unwrap();
+        setProductsData(res);
+      } catch (error) {
+        toast.error("something wrong");
+      }
+    };
+    fetch();
+  }, [products]);
 
   const handleSearch = (e) => {
     const searchText = e.target.value;
@@ -27,11 +42,8 @@ const Shop = () => {
               <div className="filter__widget">
                 <select>
                   <option value="none">Filter By Category</option>
-                  <option value="sofa"></option>
-                  <option value="mobile"></option>
-                  <option value="chair"></option>
-                  <option value="watch"></option>
-                  <option value="wireless"></option>
+                  <option value="prcie">Price</option>
+                  <option value="style">Style</option>
                 </select>
               </div>
             </Col>
@@ -63,7 +75,7 @@ const Shop = () => {
       <section className="pt-0">
         <Container>
           <Row>
-            {productsData.length === 0 ? (
+            {products?.length === 0 ? (
               <h1 className="text-center fs-4">No Products are found!</h1>
             ) : (
               <ProductsList data={productsData} />

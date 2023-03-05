@@ -3,10 +3,10 @@ import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import "../styles/add-product.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import "../styles/cart.css";
-
+import { addProduct } from "../redux/slices/ProductSlice";
 const AddProduct = () => {
   const [enterTitle, setEnterTitle] = useState("");
   const [enterDesc, setEnterDesc] = useState("");
@@ -14,7 +14,8 @@ const AddProduct = () => {
   const [enterPrice, setEnterPrice] = useState("");
   const [enterProductImg, setEnterProductImg] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const user = useSelector((state) => state.auth?.currentUser);
+  const dispatch = useDispatch();
   // fake data. wait BE
   const cartItems = [
     {
@@ -23,11 +24,25 @@ const AddProduct = () => {
       price: 12000,
     },
   ];
-  const addProduct = async (e) => {
+  const addProduct = async () => {
     e.preventDefault();
     setLoading(true);
     try {
       setLoading(false);
+      const info = {
+        data: {
+          name: enterTitle,
+          des: enterDesc,
+          price: enterPrice,
+          catagory: enterCategory,
+          grid_img: enterProductImg,
+          main_img: enterProductImg,
+        },
+        token: user.accessToken,
+      };
+
+      const res = await dispatch(addProduct(info)).unwrap();
+
       toast.success("Added product successfully !");
     } catch (error) {
       setLoading(false);
@@ -41,7 +56,7 @@ const AddProduct = () => {
         <Row>
           <Col lg="6">
             <h4 className="mb-5">Add Product</h4>
-            <Form onSubmit={addProduct} className="add__product">
+            <Form className="add__product" onSubmit={addProduct}>
               <FormGroup className="form__group">
                 <span>Product Title</span>
                 <input
@@ -101,7 +116,6 @@ const AddProduct = () => {
                   />
                 </FormGroup>
               </div>
-
               <button className="buy__btn" type="submit">
                 Add Product
               </button>
