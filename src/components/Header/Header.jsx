@@ -6,8 +6,8 @@ import userIcon from "../../assets/images/user-icon.png";
 import { Container, Row } from "reactstrap";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const nav__links = [
   {
@@ -34,7 +34,10 @@ const Header = () => {
   const profileRef = useRef(null);
   const navigate = useNavigate();
   // wait be return data user
-  const currentUser = 1;
+  const currentUser = {
+    id: 1,
+    roles: "user",
+  };
 
   const { totalQuantity } = useSelector((state) => state.cart);
 
@@ -64,6 +67,14 @@ const Header = () => {
 
   const toggleProfile = () => {
     profileRef.current.classList.toggle("show__profile");
+  };
+
+  const handleVerify = () => {
+    if (currentUser?.roles === "admin") {
+      navigate("/add-product");
+    } else {
+      toast.error("401_UNAUTHORIZED");
+    }
   };
 
   return (
@@ -116,7 +127,9 @@ const Header = () => {
                   {currentUser ? (
                     <div className="login__success">
                       <span>Logout</span>
-                      <Link to="/add-product">Add Product</Link>
+                      <span to="/add-product" onClick={handleVerify}>
+                        Add Product
+                      </span>
                     </div>
                   ) : (
                     <div className="d-flex align-items-center justify-content-between flex-column">
