@@ -133,6 +133,9 @@
   justify-content: center;
   flex-direction: column;
 }
+.login__success span:hover {
+  color: blue;
+}
 
 @media only screen and (max-width: 768px) {
   .navigation {
